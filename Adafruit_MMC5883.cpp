@@ -44,6 +44,7 @@ static float _mmc5883_uT_LSB = 0.025; // scale factor for converting to uT
 /**************************************************************************/
 /*!
     @brief  Instantiates a new Adafruit_MMC5883 class
+    @param sensorID sensor ID, -1 by default
 */
 /**************************************************************************/
 Adafruit_MMC5883::Adafruit_MMC5883(int32_t sensorID) { _sensorID = sensorID; }
@@ -55,6 +56,9 @@ Adafruit_MMC5883::Adafruit_MMC5883(int32_t sensorID) { _sensorID = sensorID; }
 /**************************************************************************/
 /*!
     @brief  Setups the HW
+    @param i2c_addr Device address
+    @param theWire I2C interface object
+    @return true on success
 */
 /**************************************************************************/
 bool Adafruit_MMC5883::begin(uint8_t i2c_addr, TwoWire *theWire) {
@@ -125,6 +129,8 @@ void Adafruit_MMC5883::setContinuousFreq(mmc5883CMFreq freq) {
 /**************************************************************************/
 /*!
     @brief  Gets the most recent sensor event
+    @param event Sensor event
+    @return true on success
 */
 /**************************************************************************/
 bool Adafruit_MMC5883::getEvent(sensors_event_t *event) {
@@ -169,6 +175,7 @@ void Adafruit_MMC5883::getSensor(sensor_t *sensor) {
 /**************************************************************************/
 /*!
     @brief  Reads the raw data from the sensor
+    @return true on success
 */
 /**************************************************************************/
 bool Adafruit_MMC5883::read() {

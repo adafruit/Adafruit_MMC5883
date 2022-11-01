@@ -51,9 +51,6 @@ typedef enum {
 //! Unified sensor driver for the magnetometer ///
 class Adafruit_MMC5883 : public Adafruit_Sensor {
 public:
-  /*!
-   * @param sensorID sensor ID, -1 by default
-   */
   Adafruit_MMC5883(int32_t sensorID = -1);
 
   bool begin(uint8_t i2c_addr = MMC5883_ADDRESS_MAG, TwoWire *theWire = &Wire);
