@@ -98,6 +98,11 @@ bool Adafruit_MMC5883::begin(uint8_t i2c_addr, TwoWire *theWire) {
   return true;
 }
 
+/**************************************************************************/
+/*!
+    @brief  Reset device
+*/
+/**************************************************************************/
 void Adafruit_MMC5883::reset(void) {
   ctrl1_reg->write(0x80 | ctrl1_reg->readCached());
 
@@ -106,6 +111,14 @@ void Adafruit_MMC5883::reset(void) {
   ctrl1_reg->write(ctrl1_reg->readCached() & ~0x80);
 }
 
+/**************************************************************************/
+/*!
+    @brief  Set Interrupt
+    @param motion motion
+    @param meas measure
+
+*/
+/**************************************************************************/
 void Adafruit_MMC5883::setInterrupt(bool motion, bool meas) {
   uint8_t c2 = ctrl2_reg->readCached();
   if (motion) {
