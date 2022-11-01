@@ -133,6 +133,7 @@ void Adafruit_MMC5883::setInterrupt(bool motion, bool meas) {
 /**************************************************************************/
 /*!
     @brief  Sets the magnetometer's continuous or not data rate
+    @param freq Frequency
 */
 /**************************************************************************/
 void Adafruit_MMC5883::setContinuousFreq(mmc5883CMFreq freq) {
