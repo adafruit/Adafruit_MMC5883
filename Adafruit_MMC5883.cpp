@@ -44,6 +44,7 @@ static float _mmc5883_uT_LSB = 0.025; // scale factor for converting to uT
 /**************************************************************************/
 /*!
     @brief  Instantiates a new Adafruit_MMC5883 class
+    @param sensorID sensor ID, -1 by default
 */
 /**************************************************************************/
 Adafruit_MMC5883::Adafruit_MMC5883(int32_t sensorID) { _sensorID = sensorID; }
@@ -55,6 +56,9 @@ Adafruit_MMC5883::Adafruit_MMC5883(int32_t sensorID) { _sensorID = sensorID; }
 /**************************************************************************/
 /*!
     @brief  Setups the HW
+    @param i2c_addr Device address
+    @param theWire I2C interface object
+    @return true on success
 */
 /**************************************************************************/
 bool Adafruit_MMC5883::begin(uint8_t i2c_addr, TwoWire *theWire) {
@@ -94,6 +98,11 @@ bool Adafruit_MMC5883::begin(uint8_t i2c_addr, TwoWire *theWire) {
   return true;
 }
 
+/**************************************************************************/
+/*!
+    @brief  Reset device
+*/
+/**************************************************************************/
 void Adafruit_MMC5883::reset(void) {
   ctrl1_reg->write(0x80 | ctrl1_reg->readCached());
 
@@ -102,6 +111,14 @@ void Adafruit_MMC5883::reset(void) {
   ctrl1_reg->write(ctrl1_reg->readCached() & ~0x80);
 }
 
+/**************************************************************************/
+/*!
+    @brief  Set Interrupt
+    @param motion motion
+    @param meas measure
+
+*/
+/**************************************************************************/
 void Adafruit_MMC5883::setInterrupt(bool motion, bool meas) {
   uint8_t c2 = ctrl2_reg->readCached();
   if (motion) {
@@ -116,6 +133,7 @@ void Adafruit_MMC5883::setInterrupt(bool motion, bool meas) {
 /**************************************************************************/
 /*!
     @brief  Sets the magnetometer's continuous or not data rate
+    @param freq Frequency
 */
 /**************************************************************************/
 void Adafruit_MMC5883::setContinuousFreq(mmc5883CMFreq freq) {
@@ -125,6 +143,8 @@ void Adafruit_MMC5883::setContinuousFreq(mmc5883CMFreq freq) {
 /**************************************************************************/
 /*!
     @brief  Gets the most recent sensor event
+    @param event Sensor event
+    @return true on success
 */
 /**************************************************************************/
 bool Adafruit_MMC5883::getEvent(sensors_event_t *event) {
@@ -169,6 +189,7 @@ void Adafruit_MMC5883::getSensor(sensor_t *sensor) {
 /**************************************************************************/
 /*!
     @brief  Reads the raw data from the sensor
+    @return true on success
 */
 /**************************************************************************/
 bool Adafruit_MMC5883::read() {
